@@ -5,39 +5,58 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField]
-    private int Speed;
+    private int speed;
+    private int sprintspeed;
     private bool isSprinting;
-    // Update is called once per frame
-    void Update()
+    public Rigidbody RB;
+
+    void Start()
     {
+        sprintspeed = speed * 2;
+    }
+
+    void Update()
+
+    {
+        RB.velocity = new Vector3(0, 0, 0);
+        Debug.Log(isSprinting);
+       
+        
+        RB.velocity = transform.forward * Input.GetAxis("Vertical") * speed;
         isSprinting = false;
+        if (Input.GetButton("Sprint"))
+        {
+            isSprinting = true;
+            Debug.Log("got here");
+        }
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(transform.forward * Speed * 0.1f);
+            RB.velocity = transform.forward * speed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(-transform.right * Speed * 0.1f);
+            RB.velocity = -transform.right * speed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(-transform.forward * Speed * 0.1f);
+            RB.velocity = -transform.forward * speed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(transform.right * Speed * 0.1f);
+            RB.velocity = transform.right * speed;
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
             isSprinting = true;
         }
-        if (isSprinting)
+        
+        if (isSprinting )
         {
-            Speed = 2;
+            speed = sprintspeed;
         }
         if (!isSprinting)
         {
-            Speed = 1;
+            speed = sprintspeed / 2;
         }
     }
 }
