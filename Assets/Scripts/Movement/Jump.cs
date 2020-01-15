@@ -9,6 +9,7 @@ public class Jump : MonoBehaviour
     public bool isGrounded;
     public bool isInTheAir = false;
     public int jumpHeight;
+    private bool doubleJump = false;
 
 
     void Start()
@@ -19,27 +20,61 @@ public class Jump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        if (isGrounded)
         {
-            rb.velocity = new Vector3(rb.velocity.z, jumpHeight);
-            isGrounded = false;
-            isInTheAir = true;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                rb.velocity = new Vector3(rb.velocity.z, jumpHeight);
+                isGrounded = false;
+                isInTheAir = true;
+                
+            }
+            else if (!Input.GetKeyDown(KeyCode.Space))
+            {
+                rb.drag = 0;
+                doubleJump = true;
+            }
         }
-        if(Input.GetKey(KeyCode.Space)&& !isGrounded && isInTheAir)
+
+        else if (!isGrounded && isInTheAir)
         {
-            rb.velocity = new Vector3(rb.velocity.z, jumpHeight);
-            isInTheAir = false;
+            if (Input.GetKeyDown(KeyCode.Space) && doubleJump)
+            {
+                rb.velocity = new Vector3(rb.velocity.z, jumpHeight);
+                //isInTheAir = false;
+                doubleJump = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                gliding();
+            }
         }
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Floor")
         {
             isGrounded = true;
-            isInTheAir = false;
+           
         }
     }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            isGrounded = false;
+           
+
+        }
+    }
+
+    private void gliding()
+    {
+        rb.drag = 5;
+    }
+
+
 }
 
