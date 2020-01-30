@@ -231,10 +231,10 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Jump
-    descriptiveName: 
+    descriptiveName: Spring
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: joystick button 0
+    positiveButton: joystick button 1
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000

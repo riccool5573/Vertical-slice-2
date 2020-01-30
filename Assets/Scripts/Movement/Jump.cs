@@ -22,6 +22,8 @@ public class Jump : MonoBehaviour
     {
         if (isGrounded)
         {
+            FindObjectOfType<audioManager>().Stop("glideSound");
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 rb.velocity = new Vector3(rb.velocity.z, jumpHeight);
@@ -56,7 +58,7 @@ public class Jump : MonoBehaviour
         if (collision.gameObject.tag == "Floor")
         {
             isGrounded = true;
-           
+            
         }
     }
 
@@ -65,14 +67,14 @@ public class Jump : MonoBehaviour
         if (collision.gameObject.tag == "Floor")
         {
             isGrounded = false;
-           
 
         }
     }
 
     private void gliding()
     {
-        rb.drag = 5;
+        rb.drag = 6;
+        FindObjectOfType<audioManager>().Play("glideSound");
     }
 
 

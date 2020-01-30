@@ -6,7 +6,7 @@ public class Mousemovement : MonoBehaviour
 {
     
     [SerializeField]
-    private int rotationSpeed;
+    private int rotationSpeed = 100;
     void Start()
     {
         Cursor.visible = false;
@@ -16,7 +16,7 @@ public class Mousemovement : MonoBehaviour
     {
         float rotation = Input.GetAxis("Mouse X") * rotationSpeed;
               rotation = Input.GetAxis("Horizontal") * rotationSpeed;
-        rotation *= Time.deltaTime;
+        rotation *= Time.fixedDeltaTime;
         transform.Rotate(0, rotation, 0);
     }
 }
